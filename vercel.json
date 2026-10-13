@@ -8,12 +8,6 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "X-Frame-Options", "value": "DENY" }
       ]
-    },
-    {
-      "source": "/(.*\\.(css|js|jpg|jpeg|png|webp|svg|pdf))",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
-      ]
     }
   ]
 }
