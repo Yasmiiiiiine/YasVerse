@@ -3,3 +3,93 @@
 @media(max-width:580px){.wrap,footer{width:calc(100% - 38px)}header{padding:0 19px}.hero{display:flex;flex-direction:column;align-items:stretch;padding-top:48px}.hero h1{font-size:56px}.intro{font-size:13px}.actions{gap:14px}.motto{margin-top:26px}.portrait-area{min-height:390px;margin-top:20px}.portrait{height:360px;width:min(295px,78%)}.orbit{width:330px;height:330px}.badge-top{right:3%;top:32px}.badge-bottom{right:0;bottom:40px}.scroll{bottom:13px}.heading{margin-bottom:29px}.heading h2{font-size:41px}.profile-grid{grid-template-columns:1fr;gap:10px}.quote{padding:9px 5px 24px}.quote h3{font-size:21px}.university{padding:25px}.journey{padding:75px 0}.journey .heading{margin-bottom:30px}.experience{grid-template-columns:27px 1fr;gap:10px;padding:17px 14px}.mark{display:none}.line{flex-wrap:wrap;gap:7px}.experience h3{font-size:18px}.modules{grid-template-columns:1fr}.project-heading{display:block}.project-heading .lead{margin-top:14px}.project-grid{grid-template-columns:1fr;gap:15px}.art{height:215px}.project-body>p{min-height:0}.practice{align-items:flex-start;padding:14px}.practice b{font-size:14px}.practice p{line-height:1.6}.contact>.wrap{padding:65px 0}.contact h2{font-size:42px}.s1{left:2%;top:18%;font-size:20px}.s2{right:2%;top:12%;font-size:30px}footer{display:grid;grid-template-columns:1fr auto;padding:21px 0}footer>p{grid-column:1/-1;grid-row:2}footer>a:not(.brand){margin:0}footer>small{grid-column:2;grid-row:3}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}.reveal{opacity:1;transform:none}}
 :where(.placeholder[hidden]){display:none}
+
+/* ================= MOTION & POLISH (couche inspirée de Campus Travail) ================= */
+:root{--ease:cubic-bezier(.2,.7,.3,1);--grad:linear-gradient(120deg,var(--rose),var(--darkrose))}
+
+/* barre de progression de scroll */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:100;border-radius:0 3px 3px 0;transition:width .08s linear}
+
+/* header : ombre au scroll */
+header.scrolled{box-shadow:0 10px 30px #502a3d12}
+
+/* ---- navigation : onglets extensibles ---- */
+nav.tabs{gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:#fffdfc;box-shadow:0 4px 14px #502a3d0a}
+.tab{display:flex;align-items:center;height:32px;padding:0 9px;border-radius:999px;color:#796e78;font-size:12px;font-weight:600;transition:background .25s var(--ease),color .25s var(--ease)}
+.tab svg{flex:none}
+.tab .label{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .35s var(--ease),opacity .25s var(--ease),padding .35s var(--ease)}
+.tab:hover,.tab.active{background:var(--pale);color:var(--darkrose)}
+.tab:hover .label,.tab.active .label,.tab:focus-visible .label{max-width:130px;opacity:1;padding-left:7px}
+.tab:focus-visible{outline:2px solid var(--rose);outline-offset:-2px}
+.tab-sep{width:1px;height:18px;background:var(--line);margin:0 3px}
+
+/* ---- reveal enrichi (cascade) ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:var(--motion-delay,0ms);will-change:opacity,transform}
+.reveal.visible{opacity:1;transform:none}
+
+/* ---- entrée orchestrée du héro ---- */
+.hero>div:first-child>*{opacity:0;translate:0 22px;animation:rise .8s var(--ease) forwards}
+.hero>div:first-child>*:nth-child(1){animation-delay:.05s}
+.hero>div:first-child>*:nth-child(2){animation-delay:.16s}
+.hero>div:first-child>*:nth-child(3){animation-delay:.27s}
+.hero>div:first-child>*:nth-child(4){animation-delay:.38s}
+.hero>div:first-child>*:nth-child(5){animation-delay:.49s}
+.portrait-area{animation:appear .9s var(--ease) .3s forwards;opacity:0}
+.photo-label{animation:appear .9s var(--ease) .55s forwards;opacity:0}
+.portrait{animation:floaty 5.5s ease-in-out 1.4s infinite alternate}
+.orbit{animation:spin 70s linear infinite}
+.badge-top{animation:twinkle 4.5s ease-in-out 1s infinite}
+.badge-bottom{animation:twinkle 5.5s ease-in-out 1.6s infinite}
+@keyframes rise{to{opacity:1;translate:0 0}}
+@keyframes appear{to{opacity:1}}
+@keyframes spin{to{rotate:360deg}}
+@keyframes floaty{from{translate:0 -6px}to{translate:0 8px}}
+@keyframes twinkle{0%,100%{scale:.96;opacity:.8}50%{scale:1.04;opacity:1}}
+
+/* ---- micro-interactions ---- */
+.btn{position:relative;overflow:hidden;background:var(--rose);background-size:180% 100%;transition:transform .18s var(--ease),box-shadow .18s var(--ease),background-position .5s var(--ease)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,#ffffff55 50%,transparent 60%);translate:-120% 0;transition:translate .7s var(--ease)}
+.btn:hover{transform:translateY(-2px);background-position:100% 0}
+.btn:hover::after{translate:120% 0}
+.btn:active{transform:scale(.97)}
+.chips span{transition:translate .25s var(--ease),background .25s var(--ease),color .25s var(--ease)}
+.project:hover .chips span,.experience:hover .chips span{translate:0 -2px}
+.mark{transition:rotate .35s var(--ease),scale .35s var(--ease)}
+.experience:hover .mark{rotate:8deg;scale:1.08}
+.core{transition:rotate .35s var(--ease),scale .35s var(--ease)}
+.project:hover .core{rotate:10deg;scale:1.08}
+
+/* accent qui se déploie au survol des cartes */
+.project,.experience{position:relative}
+.project::before,.experience::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);z-index:2}
+.project:hover::before,.experience:hover::before{transform:scaleX(1)}
+
+/* étincelles du contact */
+.spark{animation:twinkle 4s ease-in-out infinite}
+.spark.s2{animation-delay:-2s}
+
+/* h1 em : dégradé rose */
+h1 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---- shaders (héro clair + contact sombre) ---- */
+.contact{position:relative}
+.hero-shader,.contact-shader{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;display:block}
+.hero-shader{opacity:.9}
+.contact-shader{opacity:.5}
+.hero>*:not(.hero-shader){position:relative;z-index:1}
+.contact>.wrap{z-index:1}
+
+/* onglets en mobile : libellés toujours visibles */
+@media(max-width:780px){
+  nav.tabs{border:0;box-shadow:none;padding:0;background:none}
+  .tab{height:38px}
+  .tab .label{max-width:none;opacity:1;padding-left:8px}
+  .tab-sep{display:none}
+}
+
+/* accessibilité : mouvement réduit */
+@media(prefers-reduced-motion:reduce){
+  .hero>div:first-child>*,.portrait-area,.photo-label{opacity:1!important;animation:none!important;translate:0 0!important}
+  .portrait,.orbit,.badge-top,.badge-bottom,.spark{animation:none!important}
+  .scroll-progress{display:none}
+}
