@@ -140,9 +140,9 @@
     var img = photo.querySelector('img');
     actor(box, function (look, t, m) {
       var bob = Math.sin(t * 1.6) * 6 * m;
-      photo.style.transform = 'perspective(1000px) translate3d(' + (look.x * 34).toFixed(2) + 'px,' + (look.y * 24 + bob).toFixed(2) + 'px,0) ' +
-        'rotateY(' + (look.x * 12).toFixed(2) + 'deg) rotateX(' + (-look.y * 9).toFixed(2) + 'deg) rotateZ(' + (-look.x * 1.2 + Math.sin(t * 1.1) * 0.5 * m).toFixed(2) + 'deg)';
-      if (img) img.style.transform = 'scale(1.1) translate3d(' + (look.x * -16).toFixed(2) + 'px,' + (look.y * -12).toFixed(2) + 'px,0)';
+      photo.style.transform = 'perspective(1000px) translate3d(' + (look.x * 22).toFixed(2) + 'px,' + (look.y * 16 + bob).toFixed(2) + 'px,0) ' +
+        'rotateY(' + (look.x * 7).toFixed(2) + 'deg) rotateX(' + (-look.y * 5).toFixed(2) + 'deg) rotateZ(' + (-look.x * 0.6 + Math.sin(t * 1.1) * 0.3 * m).toFixed(2) + 'deg)';
+      if (img) img.style.transform = 'scale(1.1) translate3d(' + (look.x * -14).toFixed(2) + 'px,' + (look.y * -10).toFixed(2) + 'px,0)';
     });
 
     /* bouton son : ambiance douce générée en direct (aucun fichier audio), coupée par défaut */
