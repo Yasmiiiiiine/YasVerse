@@ -146,3 +146,12 @@ html,body{overflow-x:clip}
 /* la branche part du coin supérieur de la carte, sans traverser le texte */
 .profil-branch{right:-70px;top:-76px;width:112px;transform-origin:0 100%}
 @media(max-width:780px){.hero>.scroll{display:none}.profil-branch{right:-48px;top:-74px;width:108px}}
+
+/* ===== Pétales de cerisier sur le portrait ===== */
+.portrait-petals{position:absolute;inset:-6% -4%;z-index:3;pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 88%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 88%,transparent)}
+.pp{position:absolute;top:-6%;left:var(--x);width:var(--s);height:calc(var(--s)*1.25);opacity:0;will-change:transform,opacity;animation:pp-fall var(--d) linear var(--delay) infinite}
+.pp i{display:block;width:100%;height:100%;background:radial-gradient(circle at 30% 28%,#fff6f9,#f7b4cb 72%);border-radius:150% 0 150% 0;box-shadow:0 0 10px #f6a9c488;filter:blur(var(--b));animation:pp-sway var(--w) ease-in-out var(--delay) infinite alternate}
+@keyframes pp-fall{0%{opacity:0;transform:translate3d(0,0,0)}10%{opacity:.95}85%{opacity:.9}100%{opacity:0;transform:translate3d(var(--drift),calc(var(--fall,520px) + 40px),0)}}
+@keyframes pp-sway{from{transform:translateX(-14px) rotate(-30deg) rotateX(20deg)}to{transform:translateX(14px) rotate(210deg) rotateX(70deg)}}
+.portrait-petals.paused .pp,.portrait-petals.paused .pp i{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.portrait-petals{display:none}}
