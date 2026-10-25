@@ -122,10 +122,10 @@
   }
 
   /* carte QR du cerisier : flotte, se tourne vers le curseur, la branche suit légèrement */
-  var sakura = document.querySelector('[data-sakura]');
-  if (sakura) {
-    var card = sakura.querySelector('.sakura-qr'), branch = sakura.querySelector('.sakura-branch');
-    actor(sakura, function (look, t, m) {
+  var profil = document.querySelector('[data-profil]');
+  if (profil) {
+    var card = profil.querySelector('.profil-qr'), branch = profil.querySelector('.profil-branch');
+    actor(profil, function (look, t, m) {
       var bob = Math.sin(t * 1.6) * 4 * m;
       card.style.transform = 'translate3d(' + (look.x * 6).toFixed(2) + 'px,' + (bob + look.y * 4).toFixed(2) + 'px,0) ' +
         'rotateY(' + (look.x * 14).toFixed(2) + 'deg) rotateX(' + (-look.y * 10).toFixed(2) + 'deg) rotateZ(' + (Math.sin(t * 1.1) * 0.8 * m - look.x * 1.2).toFixed(2) + 'deg)';
