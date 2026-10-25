@@ -112,24 +112,6 @@ h1 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
 @keyframes bloom{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(6deg)}}
 @media(prefers-reduced-motion:reduce){.profil-branch,.profil-branch .bp{animation:none!important}.petals{display:none}}
 
-/* Obsidian — vitrine interactive */
-.showcase{padding:30px 0 105px}
-.obsidian{position:relative;height:min(78vh,720px);min-height:520px;overflow:hidden;border-radius:22px;background:linear-gradient(160deg,#f6e4ea,#ead3dc);perspective:1000px;user-select:none}
-.obsidian:before{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(to bottom,#ffffff33,transparent 45%,#0000001a)}
-.obsidian-bar{position:absolute;top:0;left:0;right:0;z-index:4;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 28px;border-bottom:1px solid #0000000d;backdrop-filter:blur(2px);font:600 10px var(--sans);letter-spacing:.18em;color:#5c4652}
-.obsidian-bar span:first-child{color:#2b2029}
-.obsidian-stage{position:absolute;inset:0;display:grid;place-items:center;padding:72px 16px}
-.obsidian-card{width:min(860px,100%);height:100%;border-radius:10px;overflow:hidden;box-shadow:0 30px 80px #502a3d40;will-change:transform}
-.obsidian-card img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:contrast(1.05) brightness(.98)}
-.obsidian-foot{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;padding:22px 28px;pointer-events:none}
-.sound-btn{pointer-events:auto;display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border:1px solid #ffffff66;border-radius:30px;background:#ffffff66;backdrop-filter:blur(10px);font:600 10px var(--sans);letter-spacing:.12em;color:var(--ink);cursor:pointer;transition:background .2s}
-.sound-btn:hover{background:#ffffff99}
-.obsidian-note{pointer-events:auto;max-width:340px;text-align:right;padding:18px 22px;background:#ffffff59;backdrop-filter:blur(12px);border:1px solid #ffffff55;border-radius:16px;box-shadow:0 10px 30px #4027351f}
-.obsidian-note p{margin:0;font-size:11px;line-height:1.8;color:#4b3d47}
-.obsidian-note a{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:10px;font-weight:700;letter-spacing:.14em;color:var(--ink);transition:opacity .2s}
-.obsidian-note a:hover{opacity:.65}
-@media(max-width:700px){.showcase{padding-bottom:78px}.obsidian-bar span:nth-child(n+2){display:none}.obsidian-foot{flex-direction:column;align-items:stretch;padding:16px}.obsidian-note{max-width:none;text-align:left}.profil-qr{width:100%}}
-.sound-btn[aria-pressed="false"] .i-on,.sound-btn[aria-pressed="true"] .i-off{display:none}
 @media(max-width:700px){.profil{display:block;margin:34px 0 0 6px}.profil-qr{width:auto}.profil-branch{right:-10px;top:-46px;width:120px}}
 
 body{overflow-x:clip}
@@ -156,9 +138,6 @@ html,body{overflow-x:clip}
   .project-campus .campus-video-wrap video{height:100%!important;min-height:340px}
   .project-campus .project-body>p{min-height:0}
 }
-.sound-btn[aria-pressed="true"]{background:#ffffffbb;box-shadow:0 0 0 3px #c9638833}
-@media(max-width:700px){.obsidian{height:690px}.obsidian-stage{padding-bottom:238px}}
-.sound-btn[hidden]{display:none}
 @media(min-width:781px){.hero>.scroll{position:absolute;left:50%;right:auto;bottom:36px;transform:translateX(-50%)}}
 
 /* ===== Retouches finales ===== */
@@ -166,29 +145,4 @@ html,body{overflow-x:clip}
 .profil-text small{color:#6d626b}
 /* la branche part du coin supérieur de la carte, sans traverser le texte */
 .profil-branch{right:-70px;top:-76px;width:112px;transform-origin:0 100%}
-@media(min-width:701px){.obsidian-note{max-width:290px}}
 @media(max-width:780px){.hero>.scroll{display:none}.profil-branch{right:-48px;top:-74px;width:108px}}
-
-/* ===== Obsidian — mise en page éditoriale appliquée à ma photo ===== */
-.obsidian{background:#d8d8d8;border-radius:14px;font-family:var(--sans)}
-.obsidian:before{background:linear-gradient(to bottom,#ffffff33,transparent 45%,#0000001a)}
-.obsidian-bar{align-items:flex-start;color:#52484f;border-bottom-color:#0000000d}
-.obsidian-bar .ob-brand{color:#1f191d;font-weight:700}
-.obsidian-bar small{display:block;margin-top:3px;font-size:8px;letter-spacing:.2em;color:#8a8087;font-weight:500}
-.ob-menu{display:grid;place-items:center;width:38px;height:38px;margin:-8px -8px 0 0;border-radius:50%;color:#1f191d;transition:background .2s}
-.ob-menu:hover{background:#0000000d}
-.obsidian-stage{padding:78px 18px 18px}
-.obsidian-card{position:relative;width:min(980px,100%);height:100%;border-radius:8px;box-shadow:0 30px 70px #00000038}
-.obsidian-card img{object-position:center 16%;transform:scale(1.08);will-change:transform;filter:contrast(1.05) brightness(.98)}
-.ob-grain{position:absolute;inset:0;background:#0000000d;mix-blend-mode:overlay;pointer-events:none}
-.ob-copy{position:absolute;left:clamp(18px,3.4vw,40px);top:clamp(70px,19%,150px);z-index:2;max-width:236px;color:#241d22}
-.ob-copy p{margin:0;font-size:12px;line-height:1.75;letter-spacing:.01em}
-.ob-copy .ob-label{margin-bottom:10px;font-size:8px;font-weight:700;letter-spacing:.24em;color:#6b6168}
-.obsidian-note{background:#ffffff66}
-@media(max-width:700px){
-  .obsidian{height:660px}
-  .obsidian-stage{padding:74px 12px 250px}
-  .ob-copy{display:none}
-  .obsidian-card{width:100%}
-}
-@media(min-width:701px){.obsidian{height:min(88vh,790px)}}
