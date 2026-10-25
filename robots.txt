@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://yas-verse.vercel.app/sitemap.xml

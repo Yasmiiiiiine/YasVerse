@@ -145,14 +145,48 @@
       if (img) img.style.transform = 'scale(1.1) translate3d(' + (look.x * -16).toFixed(2) + 'px,' + (look.y * -12).toFixed(2) + 'px,0)';
     });
 
-    /* bouton son (état visuel, comme dans la maquette) */
+    /* bouton son : ambiance douce générée en direct (aucun fichier audio), coupée par défaut */
     var btn = box.querySelector('[data-sound]');
     if (btn) {
       var label = btn.querySelector('[data-sound-label]');
-      btn.addEventListener('click', function () {
-        var active = btn.getAttribute('aria-pressed') !== 'true';
-        btn.setAttribute('aria-pressed', String(active));
-        label.textContent = active ? 'SOUND ON' : 'SOUND OFF';
+      var audio = null, active = false;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { btn.hidden = true; }
+
+      function build() {
+        var ctx = new AC(), master = ctx.createGain(); master.gain.value = 0;
+        var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700; lp.Q.value = 0.4;
+        lp.connect(master); master.connect(ctx.destination);
+        var lfo = ctx.createOscillator(), lfoGain = ctx.createGain();
+        lfo.frequency.value = 0.07; lfoGain.gain.value = 260; lfo.connect(lfoGain); lfoGain.connect(lp.frequency); lfo.start();
+        [110, 164.81, 220, 277.18, 329.63].forEach(function (f, i) {
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.type = i % 2 ? 'sine' : 'triangle'; o.frequency.value = f; o.detune.value = (i - 2) * 4;
+          g.gain.value = 0.22 / (1 + i * 0.25); o.connect(g); g.connect(lp); o.start();
+        });
+        return { ctx: ctx, master: master, timer: 0 };
+      }
+      function fade(to, secs) {
+        var now = audio.ctx.currentTime, g = audio.master.gain;
+        g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.linearRampToValueAtTime(to, now + secs);
+      }
+      function setSound(on) {
+        active = on;
+        btn.setAttribute('aria-pressed', String(on));
+        btn.setAttribute('aria-label', on ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore');
+        label.textContent = on ? 'SON ACTIVÉ' : 'SON COUPÉ';
+        if (on) {
+          if (!audio) audio = build();
+          clearTimeout(audio.timer); audio.ctx.resume(); fade(0.12, 2.5);
+        } else if (audio) {
+          fade(0, 1);
+          audio.timer = setTimeout(function () { audio.ctx.suspend(); }, 1100);
+        }
+      }
+      btn.addEventListener('click', function () { setSound(!active); });
+      document.addEventListener('visibilitychange', function () {
+        if (!audio || !active) return;
+        if (document.hidden) audio.ctx.suspend(); else audio.ctx.resume();
       });
     }
   }

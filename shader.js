@@ -83,7 +83,9 @@
     resize();
 
     var start = performance.now();
+    var visible = true, raf = 0;
     function frame(now) {
+      raf = 0;
       mx += (tmx - mx) * .04;
       my += (tmy - my) * .04;
       resize();
@@ -91,9 +93,16 @@
       gl.uniform1f(uT, reduced ? 40 : (now - start) / 1000);
       gl.uniform2f(uM, mx, my);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      if (!reduced) requestAnimationFrame(frame);
+      if (!reduced && visible) raf = requestAnimationFrame(frame);
     }
-    if (reduced) { frame(start); } else { requestAnimationFrame(frame); }
+    /* pause quand le fond n'est pas visible (économie de batterie) */
+    if ('IntersectionObserver' in window && !reduced) {
+      new IntersectionObserver(function (en) {
+        visible = en[0].isIntersecting;
+        if (visible && !raf) raf = requestAnimationFrame(frame);
+      }).observe(canvas);
+    }
+    if (reduced) { frame(start); } else { raf = requestAnimationFrame(frame); }
   }
 
   document.querySelectorAll('[data-shader]').forEach(init);
