@@ -94,17 +94,23 @@ h1 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
   .scroll-progress{display:none}
 }
 
-/* Sakura QR (hero) */
+/* Sakura — carte QR animée (branche, pétales, suivi du curseur) */
 .actions{flex-wrap:wrap}
-.sakura-qr{position:relative;display:inline-flex;align-items:center;gap:12px;padding:8px 16px 8px 8px;background:#fffdfcf2;border:1px solid #f1d6e0;border-radius:16px;box-shadow:0 12px 35px #c963882e;transition:transform .25s,box-shadow .25s}
-.sakura-qr:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 18px 44px #c9638845}
+.sakura{position:relative;display:inline-block;perspective:900px;margin-left:6px}
+.sakura-qr{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;padding:8px 18px 8px 8px;background:#fffdfcf2;border:1px solid #f1d6e0;border-radius:16px;box-shadow:0 14px 38px #c9638830,0 0 0 1px #ffffff80 inset;will-change:transform;transform-style:preserve-3d;transition:box-shadow .3s}
+.sakura-qr:hover{box-shadow:0 20px 50px #c9638850}
 .sakura-qr img{width:84px;height:84px;display:block;border-radius:10px;background:#fff}
-.sakura-text b{display:block;font:600 15px var(--serif);color:var(--darkrose)}
-.sakura-text small{display:block;margin-top:2px;font-size:10px;color:var(--muted)}
-.sakura-qr .petal{position:absolute;color:var(--rose);pointer-events:none;animation:petal-sway 4s ease-in-out infinite}
-.sakura-qr .p1{top:-10px;left:-7px;font-size:17px}
-.sakura-qr .p2{bottom:-8px;right:14px;font-size:12px;opacity:.7;animation-delay:-2s}
-@keyframes petal-sway{0%,100%{transform:rotate(-12deg) translateY(0)}50%{transform:rotate(14deg) translateY(-3px)}}
+.sakura-text small{display:block;font-size:10px;line-height:1.5;color:var(--muted);letter-spacing:.04em}
+.sakura-branch{position:absolute;z-index:3;right:-48px;top:-48px;width:130px;height:auto;pointer-events:none;transform-origin:100% 100%;animation:branch-sway 5.5s ease-in-out infinite;filter:drop-shadow(0 4px 6px #5b3a4322)}
+.sakura-branch .bl ellipse{fill:#f7bfd3;stroke:#e98fb0;stroke-width:.6}
+.sakura-branch .bl .core{fill:#c96388}
+.sakura-branch .bp{transform-box:fill-box;transform-origin:center;animation:bloom 4.2s ease-in-out infinite}
+.petals{position:absolute;z-index:4;left:-10px;right:-10px;top:-8px;height:0;pointer-events:none}
+.petals i{position:absolute;top:0;left:var(--x);width:var(--s);height:calc(var(--s)*1.25);background:radial-gradient(circle at 30% 28%,#fff0f5,#f6a9c4 70%);border-radius:150% 0 150% 0;opacity:0;filter:blur(var(--b));box-shadow:0 0 8px #f6a9c477;animation:petal-fall var(--d) linear var(--delay) infinite}
+@keyframes petal-fall{0%{opacity:0;transform:translate3d(0,-6px,0) rotate(0)}12%{opacity:.95}50%{transform:translate3d(calc(var(--drift)*.45),95px,0) rotate(170deg) rotateX(55deg)}100%{opacity:0;transform:translate3d(var(--drift),200px,0) rotate(350deg) rotateX(120deg)}}
+@keyframes branch-sway{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.6deg)}}
+@keyframes bloom{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.08) rotate(6deg)}}
+@media(prefers-reduced-motion:reduce){.sakura-branch,.sakura-branch .bp{animation:none!important}.petals{display:none}}
 
 /* Obsidian — vitrine interactive */
 .showcase{padding:30px 0 105px}
@@ -124,3 +130,7 @@ h1 em{background:var(--grad);-webkit-background-clip:text;background-clip:text;c
 .obsidian-note a:hover{opacity:.65}
 @media(max-width:700px){.showcase{padding-bottom:78px}.obsidian-bar span:nth-child(n+2){display:none}.obsidian-foot{flex-direction:column;align-items:stretch;padding:16px}.obsidian-note{max-width:none;text-align:left}.sakura-qr{width:100%}}
 .sound-btn[aria-pressed="false"] .i-on,.sound-btn[aria-pressed="true"] .i-off{display:none}
+.obsidian-card{width:min(430px,100%)!important;border-radius:200px 200px 14px 14px!important}
+.obsidian-card img{object-position:center 28%!important;transform:scale(1.08);will-change:transform;filter:contrast(1.03) brightness(1)!important}
+.obsidian-card:after{content:"";position:absolute;inset:12px;border:1px solid #ffffffaa;border-radius:inherit;pointer-events:none}
+@media(max-width:700px){.sakura{display:block;margin:34px 0 0 6px}.sakura-qr{width:auto}.sakura-branch{right:-10px;top:-46px;width:120px}}
