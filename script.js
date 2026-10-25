@@ -134,3 +134,29 @@
   }
 
 })();
+
+/* Pétales de cerisier qui tombent en douceur devant le portrait */
+(function () {
+  'use strict';
+  var area = document.querySelector('.portrait-area');
+  if (!area || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var layer = document.createElement('div');
+  layer.className = 'portrait-petals';
+  layer.setAttribute('aria-hidden', 'true');
+  var count = window.innerWidth < 700 ? 10 : 16;
+  function r(a, b) { return a + Math.random() * (b - a); }
+  for (var k = 0; k < count; k++) {
+    var p = document.createElement('span');
+    p.className = 'pp';
+    p.style.cssText = '--x:' + r(2, 96).toFixed(1) + '%;--s:' + r(9, 17).toFixed(1) + 'px;--d:' + r(9, 15).toFixed(1) + 's;' +
+      '--w:' + r(2.4, 4.2).toFixed(1) + 's;--delay:-' + r(0, 14).toFixed(1) + 's;--drift:' + r(-90, 90).toFixed(0) + 'px;--b:' + (Math.random() < .3 ? '1.2px' : '0px');
+    p.appendChild(document.createElement('i'));
+    layer.appendChild(p);
+  }
+  area.appendChild(layer);
+  function size() { layer.style.setProperty('--fall', layer.clientHeight + 'px'); }
+  size(); window.addEventListener('resize', size, { passive: true });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (en) { layer.classList.toggle('paused', !en[0].isIntersecting); }).observe(area);
+  }
+})();
