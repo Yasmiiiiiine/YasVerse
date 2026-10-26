@@ -31,33 +31,42 @@
 
   var PALETTES = {
     light: frag('vec3(.992,.972,.978)', 'vec3(.788,.388,.533)', 'vec3(.949,.773,.839)', 'vec3(.871,.784,.929)'),
-    dark: frag('vec3(.196,.145,.188)', 'vec3(.914,.608,.718)', 'vec3(.439,.263,.365)', 'vec3(.843,.522,.620)')
+    dark: frag('vec3(.196,.145,.188)', 'vec3(.914,.608,.718)', 'vec3(.439,.263,.365)', 'vec3(.843,.522,.620)'),
+    night: frag('vec3(.082,.063,.102)', 'vec3(.78,.36,.52)', 'vec3(.36,.18,.30)', 'vec3(.42,.30,.62)')
   };
 
   function init(canvas) {
     var gl = canvas.getContext('webgl', { alpha: true, antialias: false, depth: false });
     if (!gl) { canvas.style.display = 'none'; return; }
-    var src = PALETTES[canvas.getAttribute('data-shader')] || PALETTES.light;
     function sh(type, s) {
       var o = gl.createShader(type);
       gl.shaderSource(o, s); gl.compileShader(o);
       return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null;
     }
-    var vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, src);
-    if (!vs || !fs) { canvas.style.display = 'none'; return; }
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { canvas.style.display = 'none'; return; }
-    gl.useProgram(prog);
+    var vs = sh(gl.VERTEX_SHADER, VERT);
     var buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    var loc = gl.getAttribLocation(prog, 'p');
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    var uRes = gl.getUniformLocation(prog, 'u_res');
-    var uT = gl.getUniformLocation(prog, 'u_t');
-    var uM = gl.getUniformLocation(prog, 'u_m');
+    var prog = null, uRes, uT, uM;
+    function link(name) {
+      var fs = sh(gl.FRAGMENT_SHADER, PALETTES[name] || PALETTES.light);
+      if (!vs || !fs) return false;
+      var p = gl.createProgram();
+      gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+      if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return false;
+      if (prog) gl.deleteProgram(prog);
+      prog = p; gl.useProgram(prog);
+      var loc = gl.getAttribLocation(prog, 'p');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      uRes = gl.getUniformLocation(prog, 'u_res');
+      uT = gl.getUniformLocation(prog, 'u_t');
+      uM = gl.getUniformLocation(prog, 'u_m');
+      return true;
+    }
+    if (!link(canvas.getAttribute('data-shader'))) { canvas.style.display = 'none'; return; }
+    /* permet de changer de palette à chaud (mode clair / sombre) */
+    canvas.yvSetPalette = function (name) { if (link(name) && reduced) frame(start); };
 
     var mx = .5, my = .5, tmx = .5, tmy = .5;
     var section = canvas.closest('section');
