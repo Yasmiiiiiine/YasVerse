@@ -286,12 +286,3 @@ html[data-theme=dark] .menu .bars i{background:#f3e9ef}
 }
 html[data-theme=dark] .menu .bars i{background:#f3e9ef}
 @media(prefers-reduced-motion:reduce){.brand,.tabs>.tab,.tabs>.tab-sep,.tools,.portrait,.hero>.hero-rule{animation:none!important}.portrait{animation:floaty 5.5s ease-in-out infinite alternate!important}header nav#nav,.nav-overlay{transition:none!important}}
-
-/* Bandeau défilant derrière le portrait (mouvement inspiré du modèle) */
-.hero>.name-marquee{position:absolute;left:0;right:0;bottom:68px;z-index:1;overflow:hidden;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);animation:mvUp .9s cubic-bezier(.22,1,.36,1) .5s backwards}
-.nm-track{display:flex;width:max-content;white-space:nowrap;font-family:var(--serif);font-style:italic;font-size:clamp(84px,13vw,170px);line-height:1;color:transparent;-webkit-text-stroke:1.4px #c9638855;animation:nmScroll 40s linear infinite}
-.nm-track span{padding-right:.4em}
-@keyframes nmScroll{to{transform:translateX(-50%)}}
-html[data-theme=dark] .nm-track{-webkit-text-stroke-color:#f0a0bd55}
-@media(max-width:580px){.nm-track{font-size:24vw}}
-@media(prefers-reduced-motion:reduce){.nm-track{animation:none}.hero>.name-marquee{animation:none}}
