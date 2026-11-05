@@ -6,15 +6,21 @@
   /* menu mobile */
   var menuButton = document.querySelector('.menu');
   var nav = document.querySelector('#nav');
-  menuButton?.addEventListener('click', () => {
-    const open = menuButton.getAttribute('aria-expanded') === 'true';
-    menuButton.setAttribute('aria-expanded', String(!open));
-    nav.classList.toggle('open', !open);
-  });
-  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuButton?.setAttribute('aria-expanded', 'false');
-  }));
+  var overlay = document.createElement('div');
+  overlay.className = 'nav-overlay';
+  document.body.appendChild(overlay);
+  nav?.querySelectorAll('.tab,.tab-sep').forEach(function (el, i) { el.style.setProperty('--i', i); });
+  function setMenu(open) {
+    menuButton?.setAttribute('aria-expanded', String(open));
+    nav?.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuButton?.addEventListener('click', function () { setMenu(menuButton.getAttribute('aria-expanded') !== 'true'); });
+  overlay.addEventListener('click', function () { setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  window.addEventListener('resize', function () { if (window.innerWidth > 780) setMenu(false); });
+  nav?.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', function () { setMenu(false); }); });
   document.querySelector('#year').textContent = new Date().getFullYear();
 
   /* reveal au scroll + cascade */
